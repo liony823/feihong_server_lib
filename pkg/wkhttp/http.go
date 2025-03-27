@@ -249,6 +249,31 @@ func (l *WKHttp) handlersToGinHandleFuncs(handlers []HandlerFunc) []gin.HandlerF
 	return newHandlers
 }
 
+// 基本认证
+func (l *WKHttp) BasicAuthMiddleware(username, password string) HandlerFunc {
+	return func(c *Context) {
+		_username, _password, ok := c.Request.BasicAuth()
+		if !ok {
+			c.Header("WWW-Authenticate", `Basic realm="Authorization Required"`)
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"msg": "请先登录！",
+			})
+			return
+		}
+
+		if _username != username || _password != password {
+			c.Header("WWW-Authenticate", `Basic realm="Authorization Required"`)
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"msg": "用户名或密码错误！",
+			})
+			return
+		}
+
+		c.Request.SetBasicAuth(username, password)
+		c.Next()
+	}
+}
+
 // AuthMiddleware 认证中间件
 func (l *WKHttp) AuthMiddleware(cache cache.Cache, tokenPrefix string) HandlerFunc {
 

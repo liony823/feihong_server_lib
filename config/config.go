@@ -358,6 +358,15 @@ func New() *Config {
 			NameCacheExpire:             time.Hour * 24 * 7,
 		},
 
+		// ---------- 基本认证 ----------
+		BasicAuth: struct {
+			Username string
+			Password string
+		}{
+			Username: "feihong",
+			Password: "123456",
+		},
+
 		// ---------- 系统账户设置 ----------
 		Account: struct {
 			SystemUID       string
@@ -763,6 +772,10 @@ func (c *Config) ConfigureWithViper(vp *viper.Viper) {
 	c.Support.Email = c.getString("support.email", c.Support.Email)
 	c.Support.EmailSmtp = c.getString("support.emailSmtp", c.Support.EmailSmtp)
 	c.Support.EmailPwd = c.getString("support.emailPwd", c.Support.EmailPwd)
+
+	//#################### basic auth ####################
+	c.BasicAuth.Username = c.getString("basicAuth.username", c.BasicAuth.Username)
+	c.BasicAuth.Password = c.getString("basicAuth.password", c.BasicAuth.Password)
 
 }
 

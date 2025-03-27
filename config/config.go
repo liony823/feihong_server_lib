@@ -129,6 +129,12 @@ type Config struct {
 		AdminUID        string //系统管理员账号
 	}
 
+	// ---------- 基本认证 ----------
+	BasicAuth struct {
+		Username string // 用户名
+		Password string // 密码
+	}
+
 	// ---------- 文件服务 ----------
 
 	FileService FileService   // 文件服务

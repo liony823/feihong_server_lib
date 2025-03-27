@@ -119,6 +119,11 @@ func (c *Context) Cache() cache.Cache {
 	return c.NewRedisCache()
 }
 
+// BasicAuthMiddleware 基本认证中间件
+func (c *Context) BasicAuthMiddleware(r *wkhttp.WKHttp) wkhttp.HandlerFunc {
+	return r.BasicAuthMiddleware(c.cfg.BasicAuth.Username, c.cfg.BasicAuth.Password)
+}
+
 // 认证中间件
 func (c *Context) AuthMiddleware(r *wkhttp.WKHttp) wkhttp.HandlerFunc {
 

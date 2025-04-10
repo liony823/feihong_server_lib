@@ -1,15 +1,20 @@
 package wkhttp
 
 import (
+	"bytes"
 	"errors"
+	"io"
 	"net/http"
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/pkg/cache"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/pkg/log"
+	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/pkg/util"
 	"github.com/gin-gonic/gin"
+	"github.com/gocraft/dbr/v2"
 	"github.com/opentracing/opentracing-go"
 	"go.uber.org/zap"
 )
@@ -308,6 +313,92 @@ func (l *WKHttp) AuthMiddleware(cache cache.Cache, tokenPrefix string) HandlerFu
 	}
 }
 
+type OperationLog struct {
+	LogID    int64  `db:"log_id"`
+	UID      string `db:"uid"`
+	Username string `db:"username"`
+	Method   string `db:"method"`
+	Path     string `db:"path"`
+	IP       string `db:"ip"`
+	Payload  string `db:"payload"`
+	Response string `db:"response"`
+	ErrorMsg string `db:"error_msg"`
+	Status   int    `db:"status"`
+	Duration int64  `db:"duration"`
+}
+
+// 管理员操作记录中间件
+func (l *WKHttp) AdminOperateRecordMiddleware(session *dbr.Session) HandlerFunc {
+	var bufferSize = 1024
+	return func(c *Context) {
+		if c.Request.Method != http.MethodGet {
+			body, err := io.ReadAll(c.Request.Body)
+			if err != nil {
+				c.lg.Error("读取body失败", zap.Error(err))
+			}
+			c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
+
+			record := &OperationLog{
+				IP:       c.ClientIP(),
+				Method:   c.Request.Method,
+				Path:     c.Request.URL.Path,
+				UID:      c.GetLoginUID(),
+				Username: c.GetLoginName(),
+				Payload:  "",
+				Response: "",
+				Status:   0,
+				Duration: 0,
+			}
+			// 上传文件时候 中间件日志进行裁断操作
+			if strings.Contains(c.GetHeader("Content-Type"), "multipart/form-data") {
+				record.Payload = "[文件]"
+			} else {
+				if len(body) > bufferSize {
+					record.Payload = "[超出记录长度]"
+				} else {
+					record.Payload = string(body)
+				}
+			}
+
+			writer := responseBodyWriter{
+				ResponseWriter: c.Writer,
+				body:           &bytes.Buffer{},
+			}
+			c.Writer = writer
+			now := time.Now()
+
+			c.Next()
+
+			record.ErrorMsg = c.Errors.ByType(gin.ErrorTypePrivate).String()
+			record.Status = c.Writer.Status()
+			record.Duration = time.Since(now).Milliseconds()
+			record.Response = writer.body.String()
+
+			if strings.Contains(c.Writer.Header().Get("Pragma"), "public") ||
+				strings.Contains(c.Writer.Header().Get("Expires"), "0") ||
+				strings.Contains(c.Writer.Header().Get("Cache-Control"), "must-revalidate, post-check=0, pre-check=0") ||
+				strings.Contains(c.Writer.Header().Get("Content-Type"), "application/force-download") ||
+				strings.Contains(c.Writer.Header().Get("Content-Type"), "application/octet-stream") ||
+				strings.Contains(c.Writer.Header().Get("Content-Type"), "application/vnd.ms-excel") ||
+				strings.Contains(c.Writer.Header().Get("Content-Type"), "application/download") ||
+				strings.Contains(c.Writer.Header().Get("Content-Disposition"), "attachment") ||
+				strings.Contains(c.Writer.Header().Get("Content-Transfer-Encoding"), "binary") {
+				if len(record.Response) > bufferSize {
+					// 截断
+					record.Response = "超出记录长度"
+				}
+			}
+
+			// 存储 record 到mysql
+			_, err = session.InsertInto("operation_log").Columns(util.AttrToUnderscore(record)...).Record(record).Exec()
+			if err != nil {
+				c.lg.Error("存储操作日志失败", zap.Error(err))
+			}
+		}
+		c.Next()
+	}
+}
+
 // GetLoginUID GetLoginUID
 func GetLoginUID(token string, tokenPrefix string, cache cache.Cache) string {
 	uid, err := cache.Get(tokenPrefix + token)
@@ -315,6 +406,16 @@ func GetLoginUID(token string, tokenPrefix string, cache cache.Cache) string {
 		return ""
 	}
 	return uid
+}
+
+type responseBodyWriter struct {
+	gin.ResponseWriter
+	body *bytes.Buffer
+}
+
+func (r responseBodyWriter) Write(b []byte) (int, error) {
+	r.body.Write(b)
+	return r.ResponseWriter.Write(b)
 }
 
 // RouterGroup RouterGroup

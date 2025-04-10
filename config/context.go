@@ -130,6 +130,11 @@ func (c *Context) AuthMiddleware(r *wkhttp.WKHttp) wkhttp.HandlerFunc {
 	return r.AuthMiddleware(c.Cache(), c.cfg.Cache.TokenCachePrefix)
 }
 
+// 管理员操作记录中间件
+func (c *Context) AdminOperateRecordMiddleware(r *wkhttp.WKHttp) wkhttp.HandlerFunc {
+	return r.AdminOperateRecordMiddleware(c.DB())
+}
+
 // GetRedisConn GetRedisConn
 func (c *Context) GetRedisConn() *redis.Conn {
 	return c.NewRedisCache().GetRedisConn()

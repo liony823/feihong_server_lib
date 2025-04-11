@@ -314,7 +314,6 @@ func (l *WKHttp) AuthMiddleware(cache cache.Cache, tokenPrefix string) HandlerFu
 }
 
 type OperationLog struct {
-	LogID    int64  `db:"log_id"`
 	UID      string `db:"uid"`
 	Username string `db:"username"`
 	Method   string `db:"method"`

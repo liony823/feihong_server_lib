@@ -1,10 +1,6 @@
 package common
 
 const (
-	// 注册相关错误码
-	ErrUsernameEmpty = "errUsernameEmpty" // 用户名不能为空
-	ErrPasswordEmpty = "errPasswordEmpty" // 密码不能为空
-
 	// 通用错误码
 	ErrDataFormatError           = "errDataFormatError"           // 数据格式有误
 	ErrDBTransactionOpenFailed   = "errDBTransactionOpenFailed"   // 开启事务失败
@@ -47,6 +43,50 @@ const (
 	ErrUsernameOrPasswordError            = "errUsernameOrPasswordError"            // 用户名或密码错误
 	ErrJwtSecretNotConfigured             = "errJwtSecretNotConfigured"             // 没有配置jwt.secret
 
+	// 注册登录相关错误码
+	ErrRequestDataError           = "errRequestDataError"           // 请求数据格式有误
+	ErrUsernameLengthInvalid      = "errUsernameLengthInvalid"      // 用户名长度无效
+	ErrUsernameLoginLengthInvalid = "errUsernameLoginLengthInvalid" // 用户名必须在8-22位
+	ErrInviteCodeEmpty            = "errInviteCodeEmpty"            // 邀请码不能为空
+	ErrInviteCodeNotExist         = "errInviteCodeNotExist"         // 邀请码不存在
+	ErrUsernameExist              = "errUsernameExist"              // 该用户名已存在
+	ErrUsernameNotExist           = "errUsernameNotExist"           // 该用户名不存在
+	ErrUserNotExist               = "errUserNotExist"               // 该用户不存在
+	ErrPasswordIncorrect          = "errPasswordIncorrect"          // 密码不正确
+	ErrCreateTransactionFailed    = "errCreateTransactionFailed"    // 创建事务失败
+	ErrRegisterFailed             = "errRegisterFailed"             // 注册失败
+	ErrVerifyCharEmpty            = "errVerifyCharEmpty"            // 校验字符不能为空
+	ErrSignatureEmpty             = "errSignatureEmpty"             // 签名字符不能为空
+	ErrUserNoPublicKey            = "errUserNoPublicKey"            // 该用户未上传公钥
+	ErrSignatureInfoNotExist      = "errSignatureInfoNotExist"      // 签名信息不存在
+	ErrVerifySignatureError       = "errVerifySignatureError"       // 校验签名错误
+	ErrSignatureError             = "errSignatureError"             // 签名错误
+	ErrPublicKeyEmpty             = "errPublicKeyEmpty"             // 公钥不能为空
+	ErrUserDisabledOrBanned       = "errUserDisabledOrBanned"       // 该用户不存在或被封禁/禁用
+	ErrUserAlreadyUploadPublicKey = "errUserAlreadyUploadPublicKey" // 该用户已上传过公钥信息
+	ErrVerifyTypeNotMatch         = "errVerifyTypeNotMatch"         // 验证类型不匹配
+	ErrNewPasswordSameAsOld       = "errNewPasswordSameAsOld"       // 新密码不能和旧密码相同
+	ErrOldPasswordIncorrect       = "errOldPasswordIncorrect"       // 旧密码错误
+	ErrUpdateLoginPasswordFailed  = "errUpdateLoginPasswordFailed"  // 修改登录密码错误
+
+	// OAuth登录相关错误码
+	ErrRegistrationNotSupported = "errRegistrationNotSupported" // 不支持注册
+	ErrGetLoginStatusFailed     = "errGetLoginStatusFailed"     // 获取登录状态失败
+	ErrLoginStatusExpired       = "errLoginStatusExpired"       // 登录状态已过期
+	ErrGetGiteeUserInfoFailed   = "errGetGiteeUserInfoFailed"   // 获取gitee用户信息失败
+	ErrQueryGiteeUserInfoFailed = "errQueryGiteeUserInfoFailed" // 查询gitee用户信息失败
+	ErrInsertGiteeUserFailed    = "errInsertGiteeUserFailed"    // 插入gitee user失败
+
+	// 设备相关错误码
+	ErrGetDeviceInfoFailed         = "errGetDeviceInfoFailed"         // 获取设备信息失败
+	ErrDeviceNotFound              = "errDeviceNotFound"              // 未查询到该设备
+	ErrDeleteDeviceFailed          = "errDeleteDeviceFailed"          // 删除设备失败
+	ErrQueryDeviceListFailed       = "errQueryDeviceListFailed"       // 查询设备列表失败
+	ErrWebLogoutFailed             = "errWebLogoutFailed"             // 退出web设备失败
+	ErrPCLogoutFailed              = "errPCLogoutFailed"              // 退出PC设备失败
+	ErrQueryUserOnlineStatusFailed = "errQueryUserOnlineStatusFailed" // 查询用户在线状态失败
+	ErrQueryUserFriendsFailed      = "errQueryUserFriendsFailed"      // 查询用户好友失败
+
 	// 群组相关错误码
 	ErrQueryGroupListFailed        = "errQueryGroupListFailed"        // 查询群列表错误
 	ErrQueryGroupCountFailed       = "errQueryGroupCountFailed"       // 查询群数量错误
@@ -60,6 +100,37 @@ const (
 	ErrGroupMemberEmpty            = "errGroupMemberEmpty"            // 群成员不能为空
 	ErrQueryGroupMemberFailed      = "errQueryGroupMemberFailed"      // 查询群成员错误
 	ErrQueryGroupMemberCountFailed = "errQueryGroupMemberCountFailed" // 查询群成员总数错误
+
+	// 好友相关错误码
+	ErrFriendUIDEmpty                   = "errFriendUIDEmpty"                   // 好友ID不能为空
+	ErrQueryFriendApplicationFailed     = "errQueryFriendApplicationFailed"     // 查询申请记录错误
+	ErrApplicationNotExist              = "errApplicationNotExist"              // 申请记录不存在
+	ErrUpdateApplicationFailed          = "errUpdateApplicationFailed"          // 修改申请记录错误
+	ErrDeleteApplicationFailed          = "errDeleteApplicationFailed"          // 删除申请记录错误
+	ErrQueryFriendAppListFailed         = "errQueryFriendAppListFailed"         // 查询好友申请列表错误
+	ErrQueryApplicantInfoFailed         = "errQueryApplicantInfoFailed"         // 查询申请用户信息错误
+	ErrApplicantNotExist                = "errApplicantNotExist"                // 申请者不存在
+	ErrDeleteFriendFailed               = "errDeleteFriendFailed"               // 删除好友错误
+	ErrUpdateFriendRelationFailed       = "errUpdateFriendRelationFailed"       // 修改好友单项关系错误
+	ErrSendDeleteFriendEventFailed      = "errSendDeleteFriendEventFailed"      // 发送删除好友事件失败
+	ErrQueryUserFriendSettingsFailed    = "errQueryUserFriendSettingsFailed"    // 查询用户好友设置错误
+	ErrResetFriendSettingsFailed        = "errResetFriendSettingsFailed"        // 重置好友设置错误
+	ErrCommitTransactionFailed          = "errCommitTransactionFailed"          // 提交事务失败
+	ErrCannotAddSelfAsFriend            = "errCannotAddSelfAsFriend"            // 不能添加自己为好友
+	ErrLoggedInUserNotExist             = "errLoggedInUserNotExist"             // 登录用户不存在
+	ErrCheckIsFriendFailed              = "errCheckIsFriendFailed"              // 查询是否是好友失败
+	ErrAlreadyFriends                   = "errAlreadyFriends"                   // 已经是好友，不能再申请
+	ErrFriendRequestReceiverNotExist    = "errFriendRequestReceiverNotExist"    // 接收好友请求的用户不存在
+	ErrQueryFriendInfoFailed            = "errQueryFriendInfoFailed"            // 查询好友信息错误
+	ErrFriendInfoNotExist               = "errFriendInfoNotExist"               // 好友信息不存在
+	ErrVerificationCodeEmpty            = "errVerificationCodeEmpty"            // 验证码不能为空
+	ErrSetApplicationTokenFailed        = "errSetApplicationTokenFailed"        // 设置申请token失败
+	ErrQueryFriendRequestFailed         = "errQueryFriendRequestFailed"         // 查询好友申请记录错误
+	ErrQueryUserAddressBookBadgeFailed  = "errQueryUserAddressBookBadgeFailed"  // 查询用户通讯录红点信息错误
+	ErrAddFriendRequestFailed           = "errAddFriendRequestFailed"           // 新增好友申请记录错误
+	ErrUpdateFriendRequestFailed        = "errUpdateFriendRequestFailed"        // 修改好友申请记录错误
+	ErrAddUserAddressBookBadgeFailed    = "errAddUserAddressBookBadgeFailed"    // 新增用户通讯录红点信息错误
+	ErrUpdateUserAddressBookBadgeFailed = "errUpdateUserAddressBookBadgeFailed" // 修改用户通讯录红点信息错误
 
 	// 邀请相关错误码
 	ErrQueryCreatorOrAdminUidFailed = "errQueryCreatorOrAdminUidFailed" // 查询创建者或管理员的uid失败

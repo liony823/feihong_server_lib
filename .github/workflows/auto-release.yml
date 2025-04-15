@@ -21,11 +21,17 @@ jobs:
       
       - name: Generate timestamp
         id: timestamp
-        run: echo "timestamp=$(date +'%Y%m%d%H%M')" >> $GITHUB_OUTPUT
+        run: |
+          echo "timestamp=$(TZ='Asia/Shanghai' date +'%Y%m%d%H%M')" >> $GITHUB_OUTPUT
       
       - name: Create tag name
         id: tagname
         run: echo "tag=v1.0.0-${{ steps.timestamp.outputs.timestamp }}" >> $GITHUB_OUTPUT
+      
+      - name: Get Commit Message
+        id: commit_message
+        run: |
+          echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
       
       - name: Build project
         run: go build ./...
@@ -40,9 +46,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.tagname.outputs.tag }}
-          release_name: Release ${{ steps.tagname.outputs.tag }}
+          release_name: ${{ steps.tagname.outputs.tag }}
           body: |
-            自动发布的 Release
-            时间戳: ${{ steps.timestamp.outputs.timestamp }}
+            ${{ steps.commit_message.outputs.message }}
+            
+            发布时间: ${{ steps.timestamp.outputs.timestamp }}
           draft: false
           prerelease: false 

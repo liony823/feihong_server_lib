@@ -44,9 +44,10 @@ const (
 	ErrJwtSecretNotConfigured             = "errJwtSecretNotConfigured"             // 没有配置jwt.secret
 
 	// 注册登录相关错误码
+	ErrUsernameRegisterOff        = "errUsernameRegisterOff"        // 用户名已注册功能已关闭
 	ErrRequestDataError           = "errRequestDataError"           // 请求数据格式有误
 	ErrUsernameLengthInvalid      = "errUsernameLengthInvalid"      // 用户名长度无效
-	ErrUsernameLoginLengthInvalid = "errUsernameLoginLengthInvalid" // 用户名必须在8-22位
+	ErrUsernameLoginLengthInvalid = "errUsernameLoginLengthInvalid" // 用户名必须在6-18位
 	ErrInviteCodeEmpty            = "errInviteCodeEmpty"            // 邀请码不能为空
 	ErrInviteCodeNotExist         = "errInviteCodeNotExist"         // 邀请码不存在
 	ErrUsernameExist              = "errUsernameExist"              // 该用户名已存在

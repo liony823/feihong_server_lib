@@ -28,6 +28,7 @@ const (
 	ErrRemoveAllBlacklistFailed        = "errRemoveAllBlacklistFailed"        // 移除所有黑名单失败
 	ErrUpdateChannelInfoFailed         = "errUpdateChannelInfoFailed"         // 更新频道信息失败
 	ErrRemoveAllWhitelistFailed        = "errRemoveAllWhitelistFailed"        // 移除所有白明单失败
+	ErrSendChannelUpdateMessageFailed  = "errSendChannelUpdateMessageFailed"  // 发送频道更新消息失败
 
 	// 会话相关错误码
 	ErrGetConversationFailed   = "errGetConversationFailed"   // 获取conversation失败
@@ -48,9 +49,10 @@ const (
 	// 注册登录相关错误码
 	ErrUsernameRegisterOff          = "errUsernameRegisterOff"          // 用户名已注册功能已关闭
 	ErrRequestDataError             = "errRequestDataError"             // 请求数据格式有误
-	ErrUsernameLengthInvalid        = "errUsernameLengthInvalid"        // 用户名长度无效
-	ErrUsernameLoginLengthInvalid   = "errUsernameLoginLengthInvalid"   // 用户名必须在6-18位
-	ErrInviteCodeEmpty              = "errInviteCodeEmpty"              // 邀请码不能为空   
+	ErrNicknameEmpty                = "errNicknameEmpty"                // 昵称不能为空
+	ErrNicknameLengthInvalid        = "errNicknameLengthInvalid"        // 昵称长度无效
+	ErrUsernameNotInvalid           = "errUsernameNotInvalid"           // 用户名须以字母开头，仅支持使用6～18个字母、数字、下划线自由组合
+	ErrInviteCodeEmpty              = "errInviteCodeEmpty"              // 邀请码不能为空
 	ErrInviteCodeNotExist           = "errInviteCodeNotExist"           // 邀请码不存在
 	ErrPasswordEmpty                = "errPasswordEmpty"                // 密码不能为空
 	ErrUsernameExist                = "errUsernameExist"                // 该用户名已存在
@@ -83,6 +85,9 @@ const (
 	ErrVerificationCodeTypeNotMatch = "errVerificationCodeTypeNotMatch" // 验证码类型不匹配
 	ErrVerificationCodeSendTooMany  = "errVerificationCodeSendTooMany"  // 验证码发送次数过多
 	ErrVerificationCodeSendFailed   = "errVerificationCodeSendFailed"   // 验证码发送失败
+	ErrEditShortNoNotAllowed        = "errEditShortNoNotAllowed"        // 用户名编辑功能已关闭
+	ErrEditShortNoOnce              = "errEditShortNoOnce"              // 用户名只能修改一次
+	ErrUpdateUserInfoFailed         = "errUpdateUserInfoFailed"         // 更新用户信息失败
 
 	// OAuth登录相关错误码
 	ErrRegistrationNotSupported = "errRegistrationNotSupported" // 不支持注册

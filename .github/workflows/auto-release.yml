@@ -1,0 +1,48 @@
+name: Auto Release
+
+on:
+  push:
+    branches:
+      - main
+    
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.19'
+      
+      - name: Generate timestamp
+        id: timestamp
+        run: echo "timestamp=$(date +'%Y%m%d%H%M')" >> $GITHUB_OUTPUT
+      
+      - name: Create tag name
+        id: tagname
+        run: echo "tag=v1.0.0-${{ steps.timestamp.outputs.timestamp }}" >> $GITHUB_OUTPUT
+      
+      - name: Build project
+        run: go build ./...
+      
+      - name: Run tests
+        run: go test ./...
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tagname.outputs.tag }}
+          release_name: Release ${{ steps.tagname.outputs.tag }}
+          body: |
+            自动发布的 Release
+            时间戳: ${{ steps.timestamp.outputs.timestamp }}
+          draft: false
+          prerelease: false 

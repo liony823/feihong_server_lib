@@ -4,7 +4,9 @@ const (
 	// 通用错误码
 	ErrDataFormatError           = "errDataFormatError"           // 数据格式有误
 	ErrDBTransactionOpenFailed   = "errDBTransactionOpenFailed"   // 开启事务失败
+	ErrCreateTransactionFailed   = "errCreateTransactionFailed"   // 创建事务失败
 	ErrDBTransactionCommitFailed = "errDBTransactionCommitFailed" // 数据库事物提交失败
+	ErrFileUploadFailed          = "errFileUploadFailed"          // 文件上传失败
 
 	// 消息相关错误码
 	ErrSenderEmpty              = "errSenderEmpty"              // 发送者不能为空
@@ -54,7 +56,6 @@ const (
 	ErrUsernameNotExist           = "errUsernameNotExist"           // 该用户名不存在
 	ErrUserNotExist               = "errUserNotExist"               // 该用户不存在
 	ErrPasswordIncorrect          = "errPasswordIncorrect"          // 密码不正确
-	ErrCreateTransactionFailed    = "errCreateTransactionFailed"    // 创建事务失败
 	ErrRegisterFailed             = "errRegisterFailed"             // 注册失败
 	ErrVerifyCharEmpty            = "errVerifyCharEmpty"            // 校验字符不能为空
 	ErrSignatureEmpty             = "errSignatureEmpty"             // 签名字符不能为空
@@ -69,6 +70,9 @@ const (
 	ErrNewPasswordSameAsOld       = "errNewPasswordSameAsOld"       // 新密码不能和旧密码相同
 	ErrOldPasswordIncorrect       = "errOldPasswordIncorrect"       // 旧密码错误
 	ErrUpdateLoginPasswordFailed  = "errUpdateLoginPasswordFailed"  // 修改登录密码错误
+	ErrGetShortNoFailed           = "errGetShortNoFailed"           // 获取短编号失败
+	ErrSetTokenCacheFailed        = "errSetTokenCacheFailed"        // 设置token缓存失败
+	ErrUpdateIMTokenFailed        = "errUpdateIMTokenFailed"        // 更新IM token失败
 
 	// OAuth登录相关错误码
 	ErrRegistrationNotSupported = "errRegistrationNotSupported" // 不支持注册
@@ -77,6 +81,7 @@ const (
 	ErrGetGiteeUserInfoFailed   = "errGetGiteeUserInfoFailed"   // 获取gitee用户信息失败
 	ErrQueryGiteeUserInfoFailed = "errQueryGiteeUserInfoFailed" // 查询gitee用户信息失败
 	ErrInsertGiteeUserFailed    = "errInsertGiteeUserFailed"    // 插入gitee user失败
+	ErrQRCodeVerificationFailed = "errQRCodeVerificationFailed" // 二维码验证失败
 
 	// 设备相关错误码
 	ErrGetDeviceInfoFailed         = "errGetDeviceInfoFailed"         // 获取设备信息失败

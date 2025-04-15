@@ -52,6 +52,7 @@ const (
 	ErrUsernameLoginLengthInvalid = "errUsernameLoginLengthInvalid" // 用户名必须在6-18位
 	ErrInviteCodeEmpty            = "errInviteCodeEmpty"            // 邀请码不能为空
 	ErrInviteCodeNotExist         = "errInviteCodeNotExist"         // 邀请码不存在
+	ErrPasswordEmpty              = "errPasswordEmpty"              // 密码不能为空
 	ErrUsernameExist              = "errUsernameExist"              // 该用户名已存在
 	ErrUsernameNotExist           = "errUsernameNotExist"           // 该用户名不存在
 	ErrUserNotExist               = "errUserNotExist"               // 该用户不存在
@@ -73,6 +74,10 @@ const (
 	ErrGetShortNoFailed           = "errGetShortNoFailed"           // 获取短编号失败
 	ErrSetTokenCacheFailed        = "errSetTokenCacheFailed"        // 设置token缓存失败
 	ErrUpdateIMTokenFailed        = "errUpdateIMTokenFailed"        // 更新IM token失败
+	ErrZoneNotExist               = "errZoneNotExist"               // 缺少手机区号
+	ErrPhoneNumberNotExist        = "errPhoneNumberNotExist"        // 缺少手机号
+	ErrZoneNotSupport             = "errZoneNotSupport"             // 不支持的手机区号
+	ErrSendVerifyCodeFailed       = "errSendVerifyCodeFailed"       // 发送验证码失败
 
 	// OAuth登录相关错误码
 	ErrRegistrationNotSupported = "errRegistrationNotSupported" // 不支持注册

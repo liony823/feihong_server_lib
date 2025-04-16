@@ -62,6 +62,14 @@ const (
 	ErrGetShortNoFailed                   = "errGetShortNoFailed"                   // 获取短编号失败
 	ErrEditShortNoNotAllowed              = "errEditShortNoNotAllowed"              // 用户名编辑功能已关闭
 	ErrEditShortNoOnce                    = "errEditShortNoOnce"                    // 用户名只能修改一次
+	ErrSecurityQuestionEmpty              = "errSecurityQuestionEmpty"              // 密保问题不能为空
+	ErrSecurityAnswerEmpty                = "errSecurityAnswerEmpty"                // 密保答案不能为空
+	ErrSecurityQuestionNotMatch           = "errSecurityQuestionNotMatch"           // 密保问题不匹配
+	ErrSecurityAnswerNotMatch             = "errSecurityAnswerNotMatch"             // 密保答案不匹配
+	ErrSecurityAddFailed                  = "errSecurityAddFailed"                  // 添加密保失败
+	ErrSecurityUpdateFailed               = "errSecurityUpdateFailed"               // 更新密保失败
+	ErrSecurityQuestionNotExist           = "errSecurityQuestionNotExist"           // 密保问题不存在
+	ErrSecurityQueryFailed                = "errSecurityQueryFailed"                // 查询密保失败
 
 	// 注册登录相关错误码
 	ErrUsernameRegisterOff          = "errUsernameRegisterOff"          // 用户名已注册功能已关闭

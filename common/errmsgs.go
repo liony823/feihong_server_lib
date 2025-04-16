@@ -7,6 +7,7 @@ const (
 	ErrCreateTransactionFailed   = "errCreateTransactionFailed"   // 创建事务失败
 	ErrDBTransactionCommitFailed = "errDBTransactionCommitFailed" // 数据库事物提交失败
 	ErrFileUploadFailed          = "errFileUploadFailed"          // 文件上传失败
+	ErrCommitTransactionFailed   = "errCommitTransactionFailed"   // 提交事务失败
 
 	// 消息相关错误码
 	ErrSenderEmpty              = "errSenderEmpty"              // 发送者不能为空
@@ -15,6 +16,12 @@ const (
 	ErrCannotProcessSendRequest = "errCannotProcessSendRequest" // 无法处理发送消息请求
 	ErrSaveMessageFailed        = "errSaveMessageFailed"        // 保存消息失败
 	ErrMessageSyncReceiptFailed = "errMessageSyncReceiptFailed" // 消息同步回执失败
+	ErrSendTypingFailed         = "errSendTypingFailed"         // 发送typing消息失败
+	ErrSendStreamStartFailed    = "errSendStreamStartFailed"    // 发送stream start消息失败
+	ErrSendStreamEndFailed      = "errSendStreamEndFailed"      // 发送stream end消息失败
+	ErrNotAllowSendToChannel    = "errNotAllowSendToChannel"    // 不允许发送消息到此频道
+	ErrUnsupportedType          = "errUnsupportedType"          // 不支持的type
+	ErrInvalidPayload           = "errInvalidPayload"           // 无效的payload
 
 	// 频道相关错误码
 	ErrGetChannelNodeFailed            = "errGetChannelNodeFailed"            // 获取频道所在节点失败
@@ -29,6 +36,8 @@ const (
 	ErrUpdateChannelInfoFailed         = "errUpdateChannelInfoFailed"         // 更新频道信息失败
 	ErrRemoveAllWhitelistFailed        = "errRemoveAllWhitelistFailed"        // 移除所有白明单失败
 	ErrSendChannelUpdateMessageFailed  = "errSendChannelUpdateMessageFailed"  // 发送频道更新消息失败
+	ErrCallIMUpdateChannelFailed       = "errCallIMUpdateChannelFailed"       // 调用IM修改channel信息服务失败
+	ErrQueryChannelTypeEmpty           = "errQueryChannelTypeEmpty"           // 查询频道类型不能为空
 
 	// 会话相关错误码
 	ErrGetConversationFailed   = "errGetConversationFailed"   // 获取conversation失败
@@ -45,19 +54,29 @@ const (
 	ErrGetSystemAccountFailed             = "errGetSystemAccountFailed"             // 获取系统账号失败
 	ErrUsernameOrPasswordError            = "errUsernameOrPasswordError"            // 用户名或密码错误
 	ErrJwtSecretNotConfigured             = "errJwtSecretNotConfigured"             // 没有配置jwt.secret
+	ErrUserNotExist                       = "errUserNotExist"                       // 该用户不存在
+	ErrUserDisabledOrBanned               = "errUserDisabledOrBanned"               // 该用户不存在或被封禁/禁用
+	ErrLoggedInUserNotExist               = "errLoggedInUserNotExist"               // 登录用户不存在
+	ErrQueryUserInfoFailed                = "errQueryUserInfoFailed"                // 查询用户信息错误
+	ErrUpdateUserInfoFailed               = "errUpdateUserInfoFailed"               // 更新用户信息失败
+	ErrGetShortNoFailed                   = "errGetShortNoFailed"                   // 获取短编号失败
+	ErrEditShortNoNotAllowed              = "errEditShortNoNotAllowed"              // 用户名编辑功能已关闭
+	ErrEditShortNoOnce                    = "errEditShortNoOnce"                    // 用户名只能修改一次
 
 	// 注册登录相关错误码
 	ErrUsernameRegisterOff          = "errUsernameRegisterOff"          // 用户名已注册功能已关闭
 	ErrRequestDataError             = "errRequestDataError"             // 请求数据格式有误
 	ErrNicknameEmpty                = "errNicknameEmpty"                // 昵称不能为空
 	ErrNicknameLengthInvalid        = "errNicknameLengthInvalid"        // 昵称长度无效
+	ErrUsernameEmpty                = "errUsernameEmpty"                // 用户名不能为空
 	ErrUsernameNotInvalid           = "errUsernameNotInvalid"           // 用户名须以字母开头，仅支持使用6～18个字母、数字、下划线自由组合
+	ErrShortNoNotInvalid            = "errShortNoNotInvalid"            // 短编号须以字母开头，仅支持使用6～18个字母、数字、下划线自由组合
 	ErrInviteCodeEmpty              = "errInviteCodeEmpty"              // 邀请码不能为空
 	ErrInviteCodeNotExist           = "errInviteCodeNotExist"           // 邀请码不存在
 	ErrPasswordEmpty                = "errPasswordEmpty"                // 密码不能为空
+	ErrShortNoExist                 = "errShortNoExist"                 // 短编号已存在
 	ErrUsernameExist                = "errUsernameExist"                // 该用户名已存在
 	ErrUsernameNotExist             = "errUsernameNotExist"             // 该用户名不存在
-	ErrUserNotExist                 = "errUserNotExist"                 // 该用户不存在
 	ErrPasswordIncorrect            = "errPasswordIncorrect"            // 密码不正确
 	ErrRegisterFailed               = "errRegisterFailed"               // 注册失败
 	ErrVerifyCharEmpty              = "errVerifyCharEmpty"              // 校验字符不能为空
@@ -67,13 +86,11 @@ const (
 	ErrVerifySignatureError         = "errVerifySignatureError"         // 校验签名错误
 	ErrSignatureError               = "errSignatureError"               // 签名错误
 	ErrPublicKeyEmpty               = "errPublicKeyEmpty"               // 公钥不能为空
-	ErrUserDisabledOrBanned         = "errUserDisabledOrBanned"         // 该用户不存在或被封禁/禁用
 	ErrUserAlreadyUploadPublicKey   = "errUserAlreadyUploadPublicKey"   // 该用户已上传过公钥信息
 	ErrVerifyTypeNotMatch           = "errVerifyTypeNotMatch"           // 验证类型不匹配
 	ErrNewPasswordSameAsOld         = "errNewPasswordSameAsOld"         // 新密码不能和旧密码相同
 	ErrOldPasswordIncorrect         = "errOldPasswordIncorrect"         // 旧密码错误
 	ErrUpdateLoginPasswordFailed    = "errUpdateLoginPasswordFailed"    // 修改登录密码错误
-	ErrGetShortNoFailed             = "errGetShortNoFailed"             // 获取短编号失败
 	ErrSetTokenCacheFailed          = "errSetTokenCacheFailed"          // 设置token缓存失败
 	ErrUpdateIMTokenFailed          = "errUpdateIMTokenFailed"          // 更新IM token失败
 	ErrZoneNotExist                 = "errZoneNotExist"                 // 缺少手机区号
@@ -85,9 +102,7 @@ const (
 	ErrVerificationCodeTypeNotMatch = "errVerificationCodeTypeNotMatch" // 验证码类型不匹配
 	ErrVerificationCodeSendTooMany  = "errVerificationCodeSendTooMany"  // 验证码发送次数过多
 	ErrVerificationCodeSendFailed   = "errVerificationCodeSendFailed"   // 验证码发送失败
-	ErrEditShortNoNotAllowed        = "errEditShortNoNotAllowed"        // 用户名编辑功能已关闭
-	ErrEditShortNoOnce              = "errEditShortNoOnce"              // 用户名只能修改一次
-	ErrUpdateUserInfoFailed         = "errUpdateUserInfoFailed"         // 更新用户信息失败
+	ErrVerificationCodeEmpty        = "errVerificationCodeEmpty"        // 验证码不能为空
 
 	// OAuth登录相关错误码
 	ErrRegistrationNotSupported = "errRegistrationNotSupported" // 不支持注册
@@ -116,11 +131,12 @@ const (
 	ErrQueryGroupInfoFailed        = "errQueryGroupInfoFailed"        // 查询群信息错误
 	ErrGroupNotExist               = "errGroupNotExist"               // 操作的群不存在
 	ErrUnknownOperationType        = "errUnknownOperationType"        // 未知操作类型
-	ErrCallIMUpdateChannelFailed   = "errCallIMUpdateChannelFailed"   // 调用IM修改channel信息服务失败
 	ErrUpdateGroupInfoFailed       = "errUpdateGroupInfoFailed"       // 更新群信息失败
 	ErrGroupMemberEmpty            = "errGroupMemberEmpty"            // 群成员不能为空
 	ErrQueryGroupMemberFailed      = "errQueryGroupMemberFailed"      // 查询群成员错误
 	ErrQueryGroupMemberCountFailed = "errQueryGroupMemberCountFailed" // 查询群成员总数错误
+	ErrAddMemberFailed             = "errAddMemberFailed"             // 添加成员失败
+	ErrQueryMemberInfoFailed       = "errQueryMemberInfoFailed"       // 查询成员信息错误
 
 	// 好友相关错误码
 	ErrFriendUIDEmpty                   = "errFriendUIDEmpty"                   // 好友ID不能为空
@@ -136,15 +152,12 @@ const (
 	ErrSendDeleteFriendEventFailed      = "errSendDeleteFriendEventFailed"      // 发送删除好友事件失败
 	ErrQueryUserFriendSettingsFailed    = "errQueryUserFriendSettingsFailed"    // 查询用户好友设置错误
 	ErrResetFriendSettingsFailed        = "errResetFriendSettingsFailed"        // 重置好友设置错误
-	ErrCommitTransactionFailed          = "errCommitTransactionFailed"          // 提交事务失败
 	ErrCannotAddSelfAsFriend            = "errCannotAddSelfAsFriend"            // 不能添加自己为好友
-	ErrLoggedInUserNotExist             = "errLoggedInUserNotExist"             // 登录用户不存在
 	ErrCheckIsFriendFailed              = "errCheckIsFriendFailed"              // 查询是否是好友失败
 	ErrAlreadyFriends                   = "errAlreadyFriends"                   // 已经是好友，不能再申请
 	ErrFriendRequestReceiverNotExist    = "errFriendRequestReceiverNotExist"    // 接收好友请求的用户不存在
 	ErrQueryFriendInfoFailed            = "errQueryFriendInfoFailed"            // 查询好友信息错误
 	ErrFriendInfoNotExist               = "errFriendInfoNotExist"               // 好友信息不存在
-	ErrVerificationCodeEmpty            = "errVerificationCodeEmpty"            // 验证码不能为空
 	ErrSetApplicationTokenFailed        = "errSetApplicationTokenFailed"        // 设置申请token失败
 	ErrQueryFriendRequestFailed         = "errQueryFriendRequestFailed"         // 查询好友申请记录错误
 	ErrQueryUserAddressBookBadgeFailed  = "errQueryUserAddressBookBadgeFailed"  // 查询用户通讯录红点信息错误
@@ -170,15 +183,11 @@ const (
 	ErrInviterUserInfoNotFound      = "errInviterUserInfoNotFound"      // 没有查到邀请者的用户信息
 	ErrUpdateInviteStatusFailed     = "errUpdateInviteStatusFailed"     // 更新邀请信息状态失败
 	ErrUpdateInviteItemStatusFailed = "errUpdateInviteItemStatusFailed" // 更新邀请信息项状态失败
-	ErrAddMemberFailed              = "errAddMemberFailed"              // 添加成员失败
 	ErrGetInviteItemFailed          = "errGetInviteItemFailed"          // 获取邀请项失败
-	ErrQueryMemberInfoFailed        = "errQueryMemberInfoFailed"        // 查询成员信息错误
 
 	// 举报相关错误码
-	ErrQueryChannelTypeEmpty     = "errQueryChannelTypeEmpty"     // 查询频道类型不能为空
 	ErrQueryReportListFailed     = "errQueryReportListFailed"     // 查询举报列表错误
 	ErrQueryReportCountFailed    = "errQueryReportCountFailed"    // 查询举报总数量错误
-	ErrQueryUserInfoFailed       = "errQueryUserInfoFailed"       // 查询用户信息错误
 	ErrQueryReportUserSetFailed  = "errQueryReportUserSetFailed"  // 查询举报用户集合错误
 	ErrQueryReportGroupSetFailed = "errQueryReportGroupSetFailed" // 查询举报群集合错误
 
@@ -190,12 +199,6 @@ const (
 	ErrDeleteRobotMenuFailed           = "errDeleteRobotMenuFailed"           // 删除机器人菜单失败
 	ErrUpdateRobotVersionFailed        = "errUpdateRobotVersionFailed"        // 修改机器人版本号错误
 	ErrUpdateRobotStatusFailed         = "errUpdateRobotStatusFailed"         // 修改机器人状态信息错误
-	ErrSendStreamStartFailed           = "errSendStreamStartFailed"           // 发送stream start消息失败
-	ErrSendStreamEndFailed             = "errSendStreamEndFailed"             // 发送stream end消息失败
-	ErrNotAllowSendToChannel           = "errNotAllowSendToChannel"           // 不允许发送消息到此频道
-	ErrSendTypingFailed                = "errSendTypingFailed"                // 发送typing消息失败
-	ErrUnsupportedType                 = "errUnsupportedType"                 // 不支持的type
-	ErrInvalidPayload                  = "errInvalidPayload"                  // 无效的payload
 	ErrGetRobotInfoFailed              = "errGetRobotInfoFailed"              // 获取机器人信息失败
 	ErrRobotNotExist                   = "errRobotNotExist"                   // 机器人不存在
 	ErrRobotNoAppID                    = "errRobotNoAppID"                    // 机器人没有app_id

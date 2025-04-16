@@ -72,8 +72,12 @@ const (
 	ErrSecurityQueryFailed                = "errSecurityQueryFailed"                // 查询密保失败
 
 	// 注册登录相关错误码
+	ErrUserNotAllowLogin            = "errUserNotAllowLogin"            // 该用户不允许登录
 	ErrUsernameRegisterOff          = "errUsernameRegisterOff"          // 用户名已注册功能已关闭
 	ErrRequestDataError             = "errRequestDataError"             // 请求数据格式有误
+	ErrPhoneNumberEmpty             = "errPhoneNumberEmpty"             // 手机号不能为空
+	ErrZoneEmpty                    = "errZoneEmpty"                    // 区号不能为空
+	ErrPhoneNumberExist             = "errPhoneNumberExist"             // 该手机号账户已存在
 	ErrNicknameEmpty                = "errNicknameEmpty"                // 昵称不能为空
 	ErrNicknameLengthInvalid        = "errNicknameLengthInvalid"        // 昵称长度无效
 	ErrUsernameEmpty                = "errUsernameEmpty"                // 用户名不能为空

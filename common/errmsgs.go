@@ -90,6 +90,7 @@ const (
 	ErrUsernameExist                = "errUsernameExist"                // 该用户名已存在
 	ErrUsernameNotExist             = "errUsernameNotExist"             // 该用户名不存在
 	ErrPasswordIncorrect            = "errPasswordIncorrect"            // 密码不正确
+	ErrPasswordLengthInvalid        = "errPasswordLengthInvalid"        // 密码不能小于6位
 	ErrRegisterFailed               = "errRegisterFailed"               // 注册失败
 	ErrVerifyCharEmpty              = "errVerifyCharEmpty"              // 校验字符不能为空
 	ErrSignatureEmpty               = "errSignatureEmpty"               // 签名字符不能为空

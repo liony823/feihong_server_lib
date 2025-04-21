@@ -117,6 +117,7 @@ const (
 	ErrVerificationCodeSendFailed   = "errVerificationCodeSendFailed"   // 验证码发送失败
 	ErrVerificationCodeEmpty        = "errVerificationCodeEmpty"        // 验证码不能为空
 	ErrUpdateUsernameAtNotAllowed   = "errUpdateUsernameAtNotAllowed"   // 检查用户名修改时间是否超过30天
+	ErrIntroductionTooLong          = "errIntroductionTooLong"          // 个性签名不能超过200字
 
 	// OAuth登录相关错误码
 	ErrRegistrationNotSupported = "errRegistrationNotSupported" // 不支持注册
